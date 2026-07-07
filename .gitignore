@@ -1,0 +1,61 @@
+# Dependencies & build
+__pycache__/
+*.py[cod]
+*.o
+*.obj
+*.exe
+*.dll
+*.so
+*.dylib
+build/
+dist/
+*.egg-info/
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Python
+*.ipynb_checkpoints/
+
+# Models & weights (large files)
+*.pth
+*.pt
+*.onnx
+*.pb
+*.h5
+*.ckpt
+runs/
+logs/
+
+# ROS
+devel/
+build/
+install/
+
+# Datasets (large, keep separately)
+datasets/
+*.zip
+*.tar.gz
+*.rar
+
+# Jupyter
+.ipynb_checkpoints/
+
+# CMake
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
