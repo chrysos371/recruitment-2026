@@ -92,7 +92,27 @@ if ksize % 2 == 0:
 - 人群密集场景 → `minNeighbors=3~4`（避免漏检）
 - 证件照/单人照 → `minNeighbors=6~8`（杜绝假阳性）
 
-### 坑 4：测试图像生成——Haar Cascade 不认纯色圆
+### 坑 4：`cv2.imwrite` 不支持中文路径 (Windows)
+
+**现象**：脚本输出 `[SAVE]` 路径显示正确，但文件根本没写入磁盘——目录空空如也。`cv2.imwrite()` 返回 `False` 且不报异常。
+
+**原因**：OpenCV 的 `cv2.imwrite()` 在 Windows 上内部调用的是非 Unicode API，中文路径编码后无法正确解析。
+
+**解决**：用 `cv2.imencode()` + 二进制写入替代：
+```python
+# 错误写法 (中文路径下失败)
+cv2.imwrite(path, img)
+
+# 正确写法 (兼容中文路径)
+ext = os.path.splitext(name)[1]
+success, buf = cv2.imencode(ext, img)
+if success:
+    with open(path, "wb") as f:
+        f.write(buf.tobytes())
+```
+这个问题在 Windows 中文用户名 (如 `C:\Users\张三\`) 或中文项目目录下必现。
+
+### 坑 5：测试图像生成——Haar Cascade 不认纯色圆
 
 **现象**：测试生成的图像（彩色渐变 + 纯色圆形）中 `detectMultiScale` 返回 0 个人脸。
 

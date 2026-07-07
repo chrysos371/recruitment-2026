@@ -165,10 +165,20 @@ os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 
 def save_result(img: np.ndarray, name: str):
-    """保存图像到 output/ 目录。"""
+    """保存图像到 output/ 目录。
+       使用 imencode + 二进制写入, 避免 cv2.imwrite 在中文路径下失败。
+    """
     path = os.path.join(OUTPUT_DIR, name)
-    cv2.imwrite(path, img)
-    print(f"[SAVE] {path}")
+    # cv2.imwrite 在 Windows 上不支持含中文的路径,
+    # 改用 imencode 编码后以二进制写入
+    ext = os.path.splitext(name)[1]
+    success, buf = cv2.imencode(ext, img)
+    if success:
+        with open(path, "wb") as f:
+            f.write(buf.tobytes())
+        print(f"[SAVE] {path}")
+    else:
+        print(f"[ERROR] 编码失败: {name}")
 
 
 # ================================================================
