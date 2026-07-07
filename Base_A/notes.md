@@ -31,7 +31,7 @@
 
 ### 阶段三：在自己的环境里验证
 
-我的日常配置：Windows 11 + VS Code 1.122 + Git Bash 2.53。VS Code 装了 Markdown Preview Enhanced 插件后，写 Markdown 体验基本等于所见即所得，公式也能渲染。GitHub 上看不了 LaTeX 公式是个小遗憾，但项目代码里公式出现频率不高，必要时用 CodeCogs 生成图片挂上去。
+我的日常配置：Windows 11 + PyCharm 2025.3.3 + Git Bash 2.53。PyCharm 自带 Markdown 分屏预览，右侧实时渲染，LaTeX 公式也能正常显示。GitHub 上看不了 LaTeX 是个小遗憾，但项目代码里公式出现频率不高，必要时用 CodeCogs 生成图片挂上去。
 
 ---
 

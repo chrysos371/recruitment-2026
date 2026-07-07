@@ -4,7 +4,7 @@
 
 我是张杨亦航（学号 2524030231），计算机/AI 方向在读。选择软件方向参加智泽实验室招新，是因为我对计算机视觉和机器学习的落地场景有强烈兴趣——从 YOLO 做实时检测到 ResNet 的残差连接思想，这些技术正在重塑机器人感知的边界。
 
-我目前的开发环境是一台 Windows 11 笔记本，配 AMD Ryzen 9 8940HX + RTX 5070 Laptop GPU（16GB 显存），本地跑中规模模型没问题。日常用 VS Code（v1.122）配合 Git Bash 做版本管理，Python 3.14 装在 D 盘，用 Conda 25.11 管理虚拟环境。这套配置足以支撑本次考核从 C++ 面向对象到 YOLO 目标检测的全部开发任务。
+我目前的开发环境是一台 Windows 11 笔记本，配 AMD Ryzen 9 8940HX + RTX 5070 Laptop GPU（16GB 显存），本地跑中规模模型没问题。日常用 PyCharm 2025.3.3 作为主力 IDE，配合 Git Bash 做版本管理，Python 3.14 装在 D 盘，用 Conda 25.11 管理虚拟环境。这套配置足以支撑本次考核从 C++ 面向对象到 YOLO 目标检测的全部开发任务。
 
 从 Markdown 开始看似简单，但**文档能力决定一个工程师的输出质量**。我的规划是：在 14 道题的全过程中，用一套统一的文档规范写 Markdown，让每道题的思路、实现、踩坑都清晰可追溯。这既是给自己看的"知识存档"，也是给评审看的"能力证明"。
 
@@ -50,7 +50,7 @@
 
 ### 4. 代码块
 
-始终注明语言，确保 VS Code 和 GitHub 都能正确高亮：
+始终注明语言，确保 PyCharm 和 GitHub 都能正确高亮：
 
 ````markdown
 ```python
@@ -107,7 +107,7 @@ cd project && python train.py
 
 ### 10. 数学公式（LaTeX）
 
-在 VS Code 中安装 **Markdown Preview Enhanced** 插件后可以直接预览 LaTeX。但 GitHub 原生不支持渲染，需要时用 [CodeCogs](https://latex.codecogs.com/) 生成公式图片嵌入。
+PyCharm 自带 Markdown 预览（右侧分屏实时渲染），支持 LaTeX 公式。但 GitHub 原生不支持渲染，需要时用 [CodeCogs](https://latex.codecogs.com/) 生成公式图片嵌入。
 
 ```markdown
 反向传播的核心链式法则：
@@ -125,7 +125,7 @@ $$
 
 | 工具 | 版本/配置 | 用途 |
 |------|-----------|------|
-| **VS Code** | 1.122.0 | 主力编辑器，装 Markdown Preview Enhanced 实时预览 |
+| **PyCharm** | 2025.3.3 | 主力 IDE，自带 Markdown 实时预览 + Python/C++ 支持 |
 | **Git Bash** | 2.53.0 | 版本控制 + 运行 shell 命令 |
 | **Python** | 3.14.0 (D:\python\) | 所有 Python 题目的运行时 |
 | **Conda** | 25.11.1 | 虚拟环境隔离 |
