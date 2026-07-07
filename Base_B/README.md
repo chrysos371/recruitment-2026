@@ -12,16 +12,16 @@ Git 对我来说不仅是"备份工具"，更是**思考过程的记录**。每�
 
 ## 仓库概览
 
-| 项目 | 详情 |
-|------|------|
-| **本地路径** | `C:\Users\31633\Desktop\智泽实验室招新\` |
-| **远程地址** | `git@github.com:chrysos371/recruitment-2026.git`（SSH） |
-| **Git 版本** | 2.53.0.windows.2 |
-| **用户** | chrysos371 |
-| **邮箱** | 3163385811@qq.com |
-| **认证方式** | SSH Key（ED25519）→ `~/.ssh/github_chrysos371` |
-| **默认分支** | `master`（本地） → `main`（远程） |
-| **LFS** | 已启用，追踪 `Software_E2/mnist_x.txt`（122MB） |
+| 项目         | 详情                                                    |
+| ---------- | ----------------------------------------------------- |
+| **本地路径**   | `C:\Users\31633\Desktop\智泽实验室招新\`                     |
+| **远程地址**   | `git@github.com:chrysos371/recruitment-2026.git`（SSH） |
+| **Git 版本** | 2.53.0.windows.2                                      |
+| **用户**     | chrysos371                                            |
+| **邮箱**     | 3163385811@qq.com                                     |
+| **认证方式**   | SSH Key（ED25519）→ `~/.ssh/github_chrysos371`          |
+| **默认分支**   | `master`（本地） → `main`（远程）                             |
+| **LFS**    | 已启用，追踪 `Software_E2/mnist_x.txt`（122MB）               |
 
 ---
 
@@ -92,15 +92,15 @@ git pull origin main            # 拉取并合并
 
 项目 `.gitignore` 覆盖以下类别（完整 62 行）：
 
-| 类别 | 示例 |
-|------|------|
-| Python | `__pycache__/`, `*.pyc`, `*.egg-info/` |
-| C++ | `*.o`, `*.obj`, `*.exe`, `build/` |
-| 模型权重 | `*.pth`, `*.pt`, `*.onnx`, `*.h5`, `*.ckpt` |
-| 训练产物 | `runs/`, `logs/` |
-| IDE | `.vscode/`, `.idea/`, `*.swp` |
-| 系统 | `.DS_Store`, `Thumbs.db` |
-| 环境 | `venv/`, `.venv/`, `env/` |
+| 类别     | 示例                                          |
+| ------ | ------------------------------------------- |
+| Python | `__pycache__/`, `*.pyc`, `*.egg-info/`      |
+| C++    | `*.o`, `*.obj`, `*.exe`, `build/`           |
+| 模型权重   | `*.pth`, `*.pt`, `*.onnx`, `*.h5`, `*.ckpt` |
+| 训练产物   | `runs/`, `logs/`                            |
+| IDE    | `.vscode/`, `.idea/`, `*.swp`               |
+| 系统     | `.DS_Store`, `Thumbs.db`                    |
+| 环境     | `venv/`, `.venv/`, `env/`                   |
 
 ---
 

@@ -68,18 +68,13 @@ void Rational::simplify() {
 
 // ===================================================================
 //  四则运算
-//  使用 __int128 作为中间类型防止 int64_t 溢出
-//  (MSVC 不支持 __int128, 这里做防御性检查; 详见 README 说明)
+//
+//  溢出分析: 两个 int64_t 相乘的结果可能超出 int64_t 范围。
+//  GCC/Clang 下可用 __int128 做中间类型防止溢出;
+//  MSVC 不支持 __int128, 但本题为教学演示级别, 常规分数运算
+//  (分子分母均在 ±10⁹ 范围内) 的中间值远未触及 int64_t 上限。
+//  生产环境建议换用 Boost.Multiprecision::cpp_int。
 // ===================================================================
-
-#if defined(__SIZEOF_INT128__) || defined(__GNUC__)
-    // GCC/Clang: 使用 __int128
-    #define SAFE_MUL(a, b) (static_cast<__int128>(a) * static_cast<__int128>(b))
-#else
-    // MSVC 及其他: 直接用 int64_t, 实际使用中分数运算很少溢出
-    // 生产环境可换用 Boost.Multiprecision
-    #define SAFE_MUL(a, b) (static_cast<std::int64_t>(a) * static_cast<std::int64_t>(b))
-#endif
 
 Rational Rational::operator+(const Rational& rhs) const {
     // a/b + c/d = (a*d + c*b) / (b*d)

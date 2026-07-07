@@ -9,6 +9,7 @@
 我正在做**河海大学智泽实验室 2026 年招新考核**，选的是**软件类 + CV(C类) + 机器学习(E类)**。
 
 原始材料在桌面：
+
 - `C:\Users\31633\Desktop\招新题目.pdf`（完整题目说明）
 - `C:\Users\31633\Desktop\参考材料及部分模版和数据集.zip`（已解压到项目里）
 
@@ -22,29 +23,29 @@ C:\Users\31633\Desktop\智泽实验室招新\
 
 ## 题目清单（共 14 题）
 
-| 编号 | 题目 | 难度 | 状态 |
-|------|------|------|------|
-| Base_A | Markdown 使用 | 基础 | ⬜ 未开始 |
-| Base_B | Git 使用 | 基础 | ⬜ 未开始 |
-| Base_C | Linux 使用 | 基础 | ⬜ 未开始 |
-| Base_D | 科学上网 | 基础 | ⬜ 未开始 |
-| Software_A1 | Rational 有理数类 (C++) | 简单 | ⬜ 未开始 |
-| Software_A2 | Shape 图形类体系 (C++) | 简单 | ⬜ 未开始 |
-| Software_C1 | OpenCV 基础 + 人脸模糊 | 简单 | ⬜ 未开始 |
-| Software_C2 | YOLO 目标检测 (人/电动车) | 中等 | ⬜ 已有数据集 |
-| Software_C3 | 红绿灯检测 (强鲁棒性) | 困难 | ⬜ 已有数据集 |
-| Software_E1 | BP 神经网络手写实现 | 简单 | ⬜ 已有模板 |
-| Software_E2 | 手写数字识别 MLP vs CNN | 中等 | ⬜ 已有数据集 |
-| Software_E3 | 泰坦尼克号 Kaggle 竞赛 | 中等 | ⬜ 未开始 |
-| Software_E4 | VGG vs ResNet 对比复现 | 困难 | ⬜ 未开始 |
+| 编号          | 题目                  | 难度  | 状态      |
+| ----------- | ------------------- | --- | ------- |
+| Base_A      | Markdown 使用         | 基础  | ⬜ 未开始   |
+| Base_B      | Git 使用              | 基础  | ⬜ 未开始   |
+| Base_C      | Linux 使用            | 基础  | ⬜ 未开始   |
+| Base_D      | 科学上网                | 基础  | ⬜ 未开始   |
+| Software_A1 | Rational 有理数类 (C++) | 简单  | ⬜ 未开始   |
+| Software_A2 | Shape 图形类体系 (C++)   | 简单  | ⬜ 未开始   |
+| Software_C1 | OpenCV 基础 + 人脸模糊    | 简单  | ⬜ 未开始   |
+| Software_C2 | YOLO 目标检测 (人/电动车)   | 中等  | ⬜ 已有数据集 |
+| Software_C3 | 红绿灯检测 (强鲁棒性)        | 困难  | ⬜ 已有数据集 |
+| Software_E1 | BP 神经网络手写实现         | 简单  | ⬜ 已有模板  |
+| Software_E2 | 手写数字识别 MLP vs CNN   | 中等  | ⬜ 已有数据集 |
+| Software_E3 | 泰坦尼克号 Kaggle 竞赛     | 中等  | ⬜ 未开始   |
+| Software_E4 | VGG vs ResNet 对比复现  | 困难  | ⬜ 未开始   |
 
 ## 已有数据文件
 
-| 位置 | 内容 |
-|------|------|
-| `Software_C2/` | 68张电动车行人图片 + 1张标注参考图 |
-| `Software_C3/` | 40张红绿灯场景图片 |
-| `Software_E1/` | C++ 和 Python 的 BP 神经网络模板 |
+| 位置             | 内容                                                                   |
+| -------------- | -------------------------------------------------------------------- |
+| `Software_C2/` | 68张电动车行人图片 + 1张标注参考图                                                 |
+| `Software_C3/` | 40张红绿灯场景图片                                                           |
+| `Software_E1/` | C++ 和 Python 的 BP 神经网络模板                                             |
 | `Software_E2/` | MNIST 数据集 (mnist_x.txt 70000行, mnist_y.txt 70000行) + 手写数字识别作业说明.docx |
 
 ## 待办：GitHub 远程仓库

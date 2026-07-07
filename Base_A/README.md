@@ -119,6 +119,60 @@ $$
 行内公式：Softmax 函数 $p_i = \frac{e^{z_i}}{\sum_j e^{z_j}}$
 ```
 
+### 11. HTML5 嵌入
+
+Markdown 原生支持内嵌 HTML 标签，以下是考核中会用到的几种：
+
+**折叠面板** (`<details>` / `<summary>`) — 长日志或大段输出折叠起来，保持文档清爽:
+
+```markdown
+<details>
+<summary>点击展开：完整训练日志 (120 行)</summary>
+
+```
+Epoch 1/50: loss=0.4523, acc=0.8234
+Epoch 2/50: loss=0.3214, acc=0.8712
+...
+```
+
+</details>
+```
+
+实际效果:
+
+<details>
+<summary>点击展开：完整训练日志 (120 行)</summary>
+
+```
+Epoch 1/50: loss=0.4523, acc=0.8234
+Epoch 2/50: loss=0.3214, acc=0.8712
+...
+```
+
+</details>
+
+**键盘按键** (`<kbd>`) — 用于快捷键文档:
+
+```markdown
+按 <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd> 打开命令面板
+```
+
+实际效果: 按 <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd> 打开命令面板
+
+**文本居中** (`<div align="center">`) — 图片或表格居中:
+
+```markdown
+<div align="center">
+  <img src="screenshots/result.png" width="400"/>
+  <p><em>图: 处理前后的对比效果</em></p>
+</div>
+```
+
+**补充说明:**
+- GitHub 对 HTML 标签有安全白名单，`<script>` 和 `<iframe>` 会被过滤
+- `<details>` 是 GitHub Flavored Markdown 最常用的 HTML 特性，适合隐藏大段日志
+- PyCharm 预览窗也支持大部分 HTML 嵌入
+
 ---
 
 ## 我的编辑环境

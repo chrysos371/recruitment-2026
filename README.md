@@ -30,18 +30,18 @@
 
 ## 进度
 
-| 题目 | 状态 |
-|------|------|
-| Base_A | ⬜ 未开始 |
-| Base_B | ⬜ 未开始 |
-| Base_C | ⬜ 未开始 |
-| Base_D | ⬜ 未开始 |
-| Software_A1 | ⬜ 未开始 |
-| Software_A2 | ⬜ 未开始 |
-| Software_C1 | ⬜ 未开始 |
-| Software_C2 | ⬜ 未开始 |
-| Software_C3 | ⬜ 未开始 |
-| Software_E1 | ⬜ 未开始 |
-| Software_E2 | ⬜ 未开始 |
-| Software_E3 | ⬜ 未开始 |
-| Software_E4 | ⬜ 未开始 |
+| 题目 | 状态 | 完成日期 |
+|------|:----:|------|
+| Base_A — Markdown | ✅ | 7/7 |
+| Base_B — Git | ✅ | 7/7 |
+| Base_C — Linux | ⏸️ 暂缓 | 等移动硬盘 |
+| Base_D — 科学上网 | ✅ | 7/7 |
+| Software_A1 — Rational 类 | ✅ | 7/7 |
+| Software_A2 — Shape 体系 | ✅ | 7/7 |
+| Software_C1 — OpenCV 人脸模糊 | ⬜ | |
+| Software_C2 — YOLO 目标检测 | ⬜ | |
+| Software_C3 — 红绿灯检测 | ⬜ | |
+| Software_E1 — BP 神经网络 | ⬜ | |
+| Software_E2 — MLP vs CNN | ⬜ | |
+| Software_E3 — Titanic Kaggle | ⬜ | |
+| Software_E4 — VGG vs ResNet | ⬜ | |

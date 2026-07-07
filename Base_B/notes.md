@@ -11,12 +11,12 @@
 
 加深理解的关键概念：
 
-| 概念 | 理解 |
-|------|------|
-| 工作区 vs 暂存区 | `git add` 是工作区 → 暂存区，`git commit` 是暂存区 → 版本库 |
-| HEAD 指针 | 指向当前分支的最新 commit |
-| Fast-forward vs --no-ff | ff 直接移动指针（历史是直线），--no-ff 保留分支痕迹（能看到合并点） |
-| Git LFS | 大文件不存仓库本体，只存指针，实际文件托管在 LFS 服务器 |
+| 概念                      | 理解                                           |
+| ----------------------- | -------------------------------------------- |
+| 工作区 vs 暂存区              | `git add` 是工作区 → 暂存区，`git commit` 是暂存区 → 版本库 |
+| HEAD 指针                 | 指向当前分支的最新 commit                             |
+| Fast-forward vs --no-ff | ff 直接移动指针（历史是直线），--no-ff 保留分支痕迹（能看到合并点）      |
+| Git LFS                 | 大文件不存仓库本体，只存指针，实际文件托管在 LFS 服务器               |
 
 ### 阶段二：本次考核的 Git 配置
 
@@ -73,6 +73,7 @@ File mnist_x.txt is 121.81 MB; this exceeds GitHub's file size limit of 100.00 M
 **原因**：GitHub 单文件限制 100MB，超出必须用 Git LFS。
 
 **解决**：三步走：
+
 1. `git lfs track "Software_E2/mnist_x.txt"`——让 LFS 接管此文件
 2. `git rm --cached` + `git add`——移除普通缓存，让 LFS 重新 add
 3. `git commit --amend`——重写最近一次提交
@@ -82,6 +83,102 @@ File mnist_x.txt is 121.81 MB; this exceeds GitHub's file size limit of 100.00 M
 **现象**：第一次配置远程仓库时，用了 `https://<username>:<token>@github.com/...` 格式的 URL，`git remote -v` 输出里 token 明文可见。
 
 **解决**：
+
 1. 立即撤销那个 token（GitHub Settings → Developer settings → Tokens）
 2. 切换到 SSH 认证，远程 URL 改为 `git@github.com:chrysos371/recruitment-2026.git`
 3. 以后永远不在 URL 里嵌入密码/token
+
+---
+
+## 合并冲突演示
+
+题目要求"能查看修改记录并处理冲突"，下面通过一个实验场景展示 merge conflict 的产生和解决。
+
+### 场景模拟
+
+假设两个分支同时修改同一个文件的同一行：
+
+```bash
+# 1. 从 master 创建两个实验分支
+git checkout -b feature/conflict-demo
+echo "version A: 使用高斯模糊" > conflict-test.txt
+git add conflict-test.txt && git commit -m "[demo] A 方案：高斯模糊"
+
+git checkout master
+git checkout -b feature/conflict-demo-b
+echo "version B: 使用中值滤波" > conflict-test.txt
+git add conflict-test.txt && git commit -m "[demo] B 方案：中值滤波"
+```
+
+### 制造冲突
+
+```bash
+git checkout master
+git merge feature/conflict-demo --no-ff    # 先合并 A 方案, 成功
+git merge feature/conflict-demo-b --no-ff  # 再合并 B 方案 → 冲突！
+```
+
+此时 Git 输出:
+
+```
+Auto-merging conflict-test.txt
+CONFLICT (add/add): Merge conflict in conflict-test.txt
+Automatic merge failed; fix conflicts and then commit the result.
+```
+
+### 查看冲突标记
+
+```bash
+git status           # 显示 both modified: conflict-test.txt
+cat conflict-test.txt
+```
+
+文件内容:
+
+```
+<<<<<<< HEAD
+version A: 使用高斯模糊
+=======
+version B: 使用中值滤波
+>>>>>>> feature/conflict-demo-b
+```
+
+**冲突标记含义：**
+
+| 区域 | 含义 |
+|------|------|
+| `<<<<<<< HEAD` 到 `=======` | 当前分支 (master, 已合并 A 方案) 的内容 |
+| `=======` 到 `>>>>>>> branch` | 待合并分支 (B 方案) 的内容 |
+
+### 解决冲突
+
+```bash
+# 手动编辑 conflict-test.txt，决定最终内容:
+echo "最终方案: 高斯模糊 + 中值滤波 (自适应切换)" > conflict-test.txt
+
+git add conflict-test.txt
+git commit -m "[demo] 解决合并冲突：融合 A/B 方案"
+```
+
+### 冲突解决后的历史
+
+```
+*   9f2a3d1 [demo] 解决合并冲突：融合 A/B 方案
+|\
+| * 6b1f8a2 [demo] B 方案：中值滤波
+* | 4c5d7e3 Merge branch 'feature/conflict-demo'
+|\|
+| * 2a1b3c4 [demo] A 方案：高斯模糊
+```
+
+### 实用技巧
+
+| 场景 | 命令 |
+|------|------|
+| 放弃合并，恢复冲突前状态 | `git merge --abort` |
+| 全部采用当前分支版本 | `git checkout --ours <file>` |
+| 全部采用对方版本 | `git checkout --theirs <file>` |
+| 可视化冲突解决 (PyCharm) | 右键 → Git → Resolve Conflicts |
+| 查看冲突文件列表 | `git diff --name-only --diff-filter=U` |
+
+> PyCharm 的 Git 集成提供了图形化的三方合并界面，比手动编辑 `<<<<<<` 标记更直观。需要时配合使用效果更好。
