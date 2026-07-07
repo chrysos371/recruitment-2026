@@ -160,7 +160,7 @@ def detect_and_blur_faces(img: np.ndarray,
 #  4. 结果保存
 # ================================================================
 
-OUTPUT_DIR = os.path.join(os.path.dirname(__file__), "..", "output")
+OUTPUT_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "output")
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 

@@ -120,6 +120,26 @@ if success:
 
 **解决**：测试生成图只验证处理管线（加载/裁剪/增强/模糊）是否正常运作，人脸检测部分需要用真实人脸照片验证。题目本身也要求"识别图像中的人脸"，真实照片测试是必须的。
 
+### 坑 6：`__file__` 相对路径导致 output 写到错误位置
+
+**现象**：从其他目录运行 `python ..\Software_C1\src\face_blur.py` 时，输出文件没有出现在项目的 `Software_C1/output/`，而是跑到了用户目录下。
+
+**原因**：
+```python
+# 错误写法
+OUTPUT_DIR = os.path.join(os.path.dirname(__file__), "..", "output")
+```
+当脚本以相对路径运行时（`python face_blur.py`），`__file__` 是 `"face_blur.py"`，`os.path.dirname` 返回 `""`，最终路径变成 `"../output"`，解析到当前工作目录的上级。
+
+**解决**：
+```python
+# 正确写法：先用 abspath 获取绝对路径
+OUTPUT_DIR = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)), "..", "output"
+)
+```
+`os.path.abspath(__file__)` 确保无论怎么运行都拿到脚本的绝对路径，后续 `dirname` 和 `join` 都正确。
+
 ---
 
 ## 运行环境
