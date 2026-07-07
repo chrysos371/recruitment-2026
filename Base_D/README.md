@@ -34,7 +34,7 @@ curl -I https://www.google.com   # 应返回 200
 | 平台 | 用途 | 关联题目 | 状态 |
 |------|------|----------|:----:|
 | **GitHub** | 代码托管、版本控制 | 全部 14 题 | ✅ chrysos371 |
-| **Google** | Colab GPU 训练、Gmail 注册各类服务 | C2、C3、E4 | ⬜ 待注册 |
+| **Google** | Colab GPU 训练、Gmail 注册各类服务 | C2、C3、E4 | ✅ 1623492124@qq.com |
 | **Kaggle** | Titanic 竞赛提交、数据集下载 | E3 | ⬜ 待注册 |
 | **HuggingFace** | 模型权重下载 | C2、E4 | ⬜ 可选 |
 | **PyPI / Conda** | Python 包安装 | C1-C3、E1-E4 | ✅ 可用镜像 |
@@ -68,17 +68,17 @@ pip install kagglehub
 
 ---
 
-## Google / Colab 注册指南
+## Google / Colab — 已完成
 
-Google Colab 免费提供 T4 GPU，C2/C3 训练时可用。
+- 账号：`1623492124@qq.com`（外国手机号注册，已验证）
+- Google Colab 提供免费 T4 GPU，C2/C3 训练时可直接使用
 
-**注册步骤：**
+**Colab 使用步骤：**
 
 1. 打开 Clash Verge 代理
-2. 访问 [colab.research.google.com](https://colab.research.google.com/)
-3. 用 Google 账号登录（如没有先注册：支持 +86 手机号）
-4. 新建 Notebook → 运行时 → 更改运行时类型 → **T4 GPU**
-5. 验证 GPU：
+2. 访问 [colab.research.google.com](https://colab.research.google.com/)，用已有 Google 账号登录
+3. 新建 Notebook → 运行时 → 更改运行时类型 → **T4 GPU**
+4. 验证 GPU：
 ```python
 import torch
 print(torch.cuda.is_available())     # True
@@ -108,6 +108,6 @@ C2（YOLO）和 E4（VGG/ResNet）可能需要下载预训练权重。
 |------|:----:|------|
 | Clash Verge + cokecloud | ✅ | 已配置，感谢刘鸿宇学长 |
 | GitHub (chrysos371) | ✅ | SSH 免密，仓库已就绪 |
-| Google / Colab | ⬜ | 后续用到时注册 |
-| Kaggle | ⬜ | E3 开始前完成 |
+| Google / Colab | ✅ | 1623492124@qq.com，外国手机号已验证 |
+| Kaggle | ⬜ | E3 开始前完成，可用 Google 直接登录 |
 | HuggingFace | ⬜ | C2/E4 需要时注册 |
