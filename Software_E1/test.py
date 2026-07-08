@@ -38,7 +38,7 @@ class MLPTrainer:
         self.weights = []
         self.biases = []
 
-        # He 初始化 (适合 ReLU), 但对第一层做温和处理避免 fan_in=1 时权重过大
+        # Xavier 初始化: 对单输入 (fan_in=1) 比 He 更温和, 避免权重爆炸
         rng = np.random.default_rng(42)
         for i in range(len(layer_sizes) - 1):
             fan_in = layer_sizes[i]

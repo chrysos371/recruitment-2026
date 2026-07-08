@@ -28,13 +28,12 @@ def load_mnist(x_path: str, y_path: str):
     return X, y
 
 
-def split_data(X, y, train_ratio=0.857):
+def split_data(X, y, train_size=60000):
     """
     划分训练集和测试集。
     MNIST 标准: 前 60000 训练, 后 10000 测试。
-    train_ratio = 60000/70000 ≈ 0.857
     """
-    split = int(len(X) * train_ratio)
+    split = train_size
     X_train, X_test = X[:split], X[split:]
     y_train, y_test = y[:split], y[split:]
     print(f"[DATA] Train: {len(X_train)}, Test: {len(X_test)}")
