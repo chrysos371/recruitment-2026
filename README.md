@@ -44,4 +44,4 @@
 | Software_E1 — BP 神经网络 | ✅ | 7/8 |
 | Software_E2 — MLP vs CNN | ✅ | 7/8 |
 | Software_E3 — Titanic Kaggle | ✅ | 7/8 |
-| Software_E4 — VGG vs ResNet | ⬜ | |
+| Software_E4 — VGG vs ResNet | ✅ | 7/8 (VGG 90.72%, ResNet 93.96%) |
