@@ -1,0 +1,11 @@
+# Software_C2 — YOLO 目标检测数据集配置
+# 河海大学智泽实验室 2026 招新考核
+
+path: ./dataset                    # 数据集根目录 (相对于此文件)
+train: images/train                # 训练图片
+
+nc: 3                              # 类别数
+names:
+  0: community_person              # 社区人员
+  1: non_community_person          # 非社区人员
+  2: electric_bike                 # 电动车
