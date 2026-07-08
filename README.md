@@ -24,9 +24,21 @@
 
 ## 环境
 
-- 语言：C++（A1/A2）、Python（C1-C3, E1-E4）
-- 框架：OpenCV、YOLO (v5/v8/v11)、PyTorch
-- 系统：Ubuntu 22.04 / Windows 11
+## 环境
+
+| 组件 | 版本/说明 |
+|------|-----------|
+| OS | Windows 11 |
+| C++ 编译器 | VS 2022 MSVC 14.44 (D 盘), `/std:c++20 /utf-8` |
+| C++ 一键编译 | `Software_A1/src/build.bat` (自动设置环境变量) |
+| Python | 3.14.0 (D 盘), 主要包: numpy, opencv, torch, sklearn, ultralytics |
+| GPU 训练 (E4) | AutoDL RTX 5090: `python cifar10_train.py --epochs 80` |
+| E1 预训练权重 | `e1_1d_weights.npz` / `e1_2d_weights.npz` (已缓存, 评审秒出) |
+
+## A1/A2 编译说明
+
+VS 2022 装在非标准路径 (`D:\新建文件夹\`), 直接运行 `cl.exe` 会报错。
+请在 `Software_A1/src/` 下**双击 `build.bat`** 一键编译 A1 和 A2。
 
 ## 进度
 

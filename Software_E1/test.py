@@ -10,6 +10,7 @@ Software_E1 — BP 神经网络手写实现
 """
 
 import math
+import os
 import numpy as np
 
 
@@ -138,6 +139,25 @@ class MLPTrainer:
         y = self.forward(x)
         return y[0, 0]
 
+    def save(self, path: str) -> None:
+        """保存权重到 .npz 文件 (评审者可直接加载, 跳过训练)。"""
+        data = {}
+        for i, (w, b) in enumerate(zip(self.weights, self.biases)):
+            data[f'w{i}'] = w
+            data[f'b{i}'] = b
+        np.savez(path, **data)
+
+    def load(self, path: str) -> bool:
+        """从 .npz 文件加载权重, 成功返回 True。"""
+        try:
+            data = np.load(path)
+            for i in range(len(self.weights)):
+                self.weights[i] = data[f'w{i}']
+                self.biases[i] = data[f'b{i}']
+            return True
+        except (FileNotFoundError, OSError):
+            return False
+
 
 # ================================================================
 #  一维输入的神经网络实现
@@ -145,11 +165,13 @@ class MLPTrainer:
 
 class NeuralNetwork1D:
     def __init__(self):
-        # 网络: 1 → 32 → 64 → 1, ReLU 隐藏层, 输出无激活
         self.net = MLPTrainer([1, 32, 64, 1], learning_rate=0.001)
 
+        # 尝试加载预训练权重 (评审者无需等待训练)
+        if self.net.load(os.path.join(os.path.dirname(os.path.abspath(__file__)), "e1_1d_weights.npz")):
+            return
+
         # 生成训练数据: sin(x) on [0, 2π]
-        # 输入归一化到 [0, 1] 帮助收敛
         n_samples = 2000
         X_raw = np.linspace(0, 2 * math.pi, n_samples).reshape(-1, 1).astype(np.float64)
         X_train = X_raw / (2 * math.pi)
@@ -157,6 +179,7 @@ class NeuralNetwork1D:
 
         # 训练
         self.net.train(X_train, Y_train, epochs=8000, batch_size=64)
+        self.net.save(os.path.join(os.path.dirname(os.path.abspath(__file__)), "e1_1d_weights.npz"))
 
     def predict(self, input_x: float) -> float:
         # 归一化输入 (与训练时一致)
@@ -171,11 +194,13 @@ class NeuralNetwork1D:
 
 class NeuralNetwork2D:
     def __init__(self):
-        # 网络: 2 → 48 → 96 → 48 → 1, ReLU 隐藏层, 输出无激活
         self.net = MLPTrainer([2, 48, 96, 48, 1], learning_rate=0.0015)
 
+        # 尝试加载预训练权重 (评审者无需等待训练)
+        if self.net.load(os.path.join(os.path.dirname(os.path.abspath(__file__)), "e1_2d_weights.npz")):
+            return
+
         # 生成训练数据: sin(x1)·cos(x2) on [0, 2π]²
-        # 输入归一化到 [0, 1] 帮助收敛
         n = 80
         x1_vals = np.linspace(0, 2 * math.pi, n)
         x2_vals = np.linspace(0, 2 * math.pi, n)
@@ -186,6 +211,7 @@ class NeuralNetwork2D:
 
         # 训练
         self.net.train(X_train, Y_train, epochs=25000, batch_size=128)
+        self.net.save(os.path.join(os.path.dirname(os.path.abspath(__file__)), "e1_2d_weights.npz"))
 
     def predict(self, input_x1: float, input_x2: float) -> float:
         # 归一化输入 (与训练时一致)
