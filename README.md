@@ -38,10 +38,10 @@
 | Base_D — 科学上网 | ✅ | 7/7 |
 | Software_A1 — Rational 类 | ✅ | 7/7 |
 | Software_A2 — Shape 体系 | ✅ | 7/7 |
-| Software_C1 — OpenCV 人脸模糊 | ⬜ | |
+| Software_C1 — OpenCV 人脸模糊 | ✅ | 7/7 |
 | Software_C2 — YOLO 目标检测 | ⬜ | |
 | Software_C3 — 红绿灯检测 | ⬜ | |
-| Software_E1 — BP 神经网络 | ⬜ | |
-| Software_E2 — MLP vs CNN | ⬜ | |
-| Software_E3 — Titanic Kaggle | ⬜ | |
+| Software_E1 — BP 神经网络 | ✅ | 7/8 |
+| Software_E2 — MLP vs CNN | ✅ | 7/8 |
+| Software_E3 — Titanic Kaggle | ✅ | 7/8 |
 | Software_E4 — VGG vs ResNet | ⬜ | |

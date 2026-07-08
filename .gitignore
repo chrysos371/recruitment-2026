@@ -59,3 +59,9 @@ CMakeCache.txt
 CMakeFiles/
 cmake_install.cmake
 Makefile
+
+# Generated artifacts
+Software_C1/output/
+Software_E3/test.csv
+Software_E3/submission.csv
+*.obj
