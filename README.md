@@ -18,7 +18,7 @@
 ├── Software_E2/     # 手写数字识别 MLP vs CNN [中等]
 ├── Software_E3/     # 泰坦尼克号生还预测 [中等]
 ├── Software_E4/     # VGG vs ResNet 对比复现 [困难]
-├── 自我介绍.pdf
+├── 自我介绍.pdf     (待补充)
 └── README.md
 ```
 
@@ -27,11 +27,14 @@
 | 组件 | 版本/说明 |
 |------|-----------|
 | OS | Windows 11 |
+| WSL | Ubuntu 26.04 LTS (2026/08/11 安装) |
 | C++ 编译器 | VS 2022 MSVC 14.44 (D 盘), `/std:c++20 /utf-8` |
 | C++ 一键编译 | `Software_A1/src/build.bat` (自动设置环境变量) |
 | Python | 3.14.0 (D 盘), 主要包: numpy, opencv, torch, sklearn, ultralytics |
 | GPU 训练 (E4) | AutoDL RTX 5090: `python cifar10_train.py --epochs 80` |
-| E1 预训练权重 | `e1_1d_weights.npz` / `e1_2d_weights.npz` (已缓存, 评审秒出) |
+| E1 预训练权重 | `e1_1d_weights.npz` / `e1_2d_weights.npz` (Python+NumPy 推理) |
+| E1 C++ 推理 | `test.cpp` + `e1_1d_weights.h` / `e1_2d_weights.h` (预训练权重嵌入) |
+| 代理 | Clash Verge + cokecloud.biz |
 
 ## A1/A2 编译说明
 
@@ -40,18 +43,22 @@ VS 2022 装在非标准路径 (`D:\新建文件夹\`), 直接运行 `cl.exe` 会
 
 ## 进度
 
-| 题目 | 状态 | 完成日期 |
-|------|:----:|------|
-| Base_A — Markdown | ✅ | 7/7 |
-| Base_B — Git | ✅ | 7/7 |
-| Base_C — Linux | ⏸️ 暂缓 | 等移动硬盘 |
-| Base_D — 科学上网 | ✅ | 7/7 |
-| Software_A1 — Rational 类 | ✅ | 7/7 |
-| Software_A2 — Shape 体系 | ✅ | 7/7 |
-| Software_C1 — OpenCV 人脸模糊 | ✅ | 7/7 |
-| Software_C2 — YOLO 目标检测 | ⚠️ | 7/8 (待人工修正标注) |
-| Software_C3 — 红绿灯检测 | ✅ | 7/8 |
-| Software_E1 — BP 神经网络 | ✅ | 7/8 |
-| Software_E2 — MLP vs CNN | ✅ | 7/8 |
-| Software_E3 — Titanic Kaggle | ✅ | 7/8 |
-| Software_E4 — VGG vs ResNet | ✅ | 7/8 (VGG 90.72%, ResNet 93.96%) |
+| 题目 | 状态 | 完成日期 | 备注 |
+|------|:----:|------|------|
+| Base_A — Markdown | ✅ | 7/7 | |
+| Base_B — Git | ✅ | 7/7 | |
+| Base_C — Linux | 🔵 | 8/11 进行中 | WSL2 Ubuntu 26.04 已安装，实操截图中 |
+| Base_D — 科学上网 | ✅ | 7/7 | |
+| Software_A1 — Rational 类 | ✅ | 7/7 | 已修复 INT64_MIN 溢出保护 |
+| Software_A2 — Shape 体系 | ✅ | 7/7 | |
+| Software_C1 — OpenCV 人脸模糊 | ✅ | 7/7 | 已修复中文路径 cv2.imread |
+| Software_C2 — YOLO 目标检测 | ⚠️ | 7/8 | 代码已修复(中文路径+模型路径)；标注待人工修正 |
+| Software_C3 — 红绿灯检测 | ✅ | 7/8 | 已修复 KeyError 'off' |
+| Software_E1 — BP 神经网络 | ✅ | 7/8 | 已修复 C++ predict stubs+PyTorch bug；Python/C++ 双版本均可用 |
+| Software_E2 — MLP vs CNN | ✅ | 7/8 | 已修复 top5_acc.py 模型加载兼容性 |
+| Software_E3 — Titanic Kaggle | ✅ | 7/8 | 已修复 NaN/入口缺失/tuning |
+| Software_E4 — VGG vs ResNet | ✅ | 7/8 | VGG 90.72%, ResNet 93.96% |
+
+> **2026/08/11 代码审查修复**：修复 22 个文件共 25 项 bug（崩溃/中文路径/类型错误/溢出/CUDA/模型路径等），commit `d8c70ba`。
+
+> **待完成**：Base_C 截图、C2 标注修正、全部截图、自我介绍.pdf
