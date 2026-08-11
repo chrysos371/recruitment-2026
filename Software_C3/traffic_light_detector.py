@@ -174,7 +174,7 @@ def detect_lights(img_path: str) -> dict:
                 best_color = name
 
     return {
-        "state": best_color if counts[best_color] > 0 else "off",
+        "state": best_color if counts.get(best_color, 0) > 0 else "off",
         "counts": {k: len(v) for k, v in results.items()},
         "boxes": boxes,
     }

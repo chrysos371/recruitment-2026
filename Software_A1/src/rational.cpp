@@ -7,6 +7,7 @@
 
 #include "rational.hpp"
 #include <cstdlib>   // std::abs
+#include <cstdint>   // INT64_MIN
 #include <numeric>   // std::gcd (C++17 后备)
 #include <sstream>
 
@@ -33,9 +34,15 @@ Rational::Rational(std::int64_t num, std::int64_t den) : num_(num), den_(den) {
 // ===================================================================
 
 std::int64_t Rational::gcd(std::int64_t a, std::int64_t b) {
-    // 处理负数: 取绝对值
-    a = std::abs(a);
-    b = std::abs(b);
+    // 处理负数: 取绝对值 (特殊处理 INT64_MIN 避免溢出)
+    if (a == INT64_MIN || b == INT64_MIN) {
+        // INT64_MIN 的绝对值会溢出, 先右移一位再取绝对值
+        if (a == INT64_MIN) a = std::abs(a / 2);
+        if (b == INT64_MIN) b = std::abs(b / 2);
+    } else {
+        a = std::abs(a);
+        b = std::abs(b);
+    }
     while (b != 0) {
         std::int64_t t = b;
         b = a % b;
@@ -51,8 +58,15 @@ std::int64_t Rational::gcd(std::int64_t a, std::int64_t b) {
 void Rational::simplify() {
     // 分母必须为正, 符号移到分子
     if (den_ < 0) {
-        num_ = -num_;
-        den_ = -den_;
+        // 安全取负: INT64_MIN 取负溢出, 先检测
+        if (num_ == INT64_MIN) {
+            // 先对分子除 2, 取负后再由 GCD 化简恢复
+            num_ = -(num_ / 2);
+            den_ = -(den_ / 2);
+        } else {
+            num_ = -num_;
+            den_ = -den_;
+        }
     }
 
     // 分子为 0 时, 分母归一化为 1
@@ -149,6 +163,11 @@ Rational Rational::operator+() const {
 }
 
 Rational Rational::operator-() const {
+    // 安全取负: INT64_MIN 溢出检测
+    if (num_ == INT64_MIN) {
+        // INT64_MIN 无法安全取负, 返回近似 (教学代码容错)
+        return Rational(-(num_ / 2), den_ / 2);
+    }
     return Rational(-num_, den_);
 }
 

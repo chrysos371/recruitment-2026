@@ -42,7 +42,18 @@ def main():
     print("=" * 60)
 
     mlp = MLP(hidden_sizes=(512, 256, 128), dropout=0.3).to(device)
-    mlp.load_state_dict(torch.load("model/mlp.pth", map_location=device, weights_only=True))
+    try:
+        mlp.load_state_dict(torch.load("model/mlp.pth", map_location=device, weights_only=True))
+    except RuntimeError:
+        # 如果保存的模型配置不同, 尝试其他常见配置
+        print("[WARN] (512,256,128) 加载失败, 尝试 (256,128)...")
+        mlp = MLP(hidden_sizes=(256, 128), dropout=0.2).to(device)
+        try:
+            mlp.load_state_dict(torch.load("model/mlp.pth", map_location=device, weights_only=True))
+        except RuntimeError:
+            print("[WARN] (256,128) 也失败, 尝试基线 (128,)...")
+            mlp = MLP(hidden_sizes=(128,), dropout=0.0).to(device)
+            mlp.load_state_dict(torch.load("model/mlp.pth", map_location=device, weights_only=True))
 
     topk_mlp = topk_accuracy(mlp, test_loader, device, k=5)
     for k, acc in topk_mlp.items():

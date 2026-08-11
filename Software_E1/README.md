@@ -54,7 +54,13 @@ Software_E1/
 │   ├── convolution neural network.py       # 我之前写的 CIFAR-10 CNN
 │   ├── recurrent neural network.py         # 我之前写的 RNN 歌词生成
 │   ├── iris classification.py              # 我之前写的鸢尾花分类
-│   └── test.py                             # 题目模板（待填入）
+├── test.py                                 # E1 完整实现 (NeuralNetwork1D / 2D / Test)
+├── test.cpp                                # C++ 版本 (含预训练权重头文件)
+├── e1_1d_weights.npz                       # 1D 预训练权重
+├── e1_2d_weights.npz                       # 2D 预训练权重
+├── e1_1d_weights.h                         # 1D 权重 C 头文件
+├── e1_2d_weights.h                         # 2D 权重 C 头文件
+├── export_weights.py                       # 权重导出脚本
 ├── README.md
 └── notes.md
 ```

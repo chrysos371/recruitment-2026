@@ -64,8 +64,8 @@ def main():
     )
 
     print("\n[3] 训练完成!")
-    print(f"  最佳模型: runs/detect/c2_detection/weights/best.pt")
-    print(f"  训练日志: runs/detect/c2_detection/results.csv")
+    print(f"  最佳模型: runs/detect/{results.save_dir.name}/weights/best.pt")
+    print(f"  训练日志: runs/detect/{results.save_dir.name}/results.csv")
 
     # 验证
     print("\n[4] 验证集评估...")

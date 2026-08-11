@@ -18,6 +18,7 @@ COCO 类别映射:
 import os, shutil
 from pathlib import Path
 import cv2
+import numpy as np
 from ultralytics import YOLO
 
 
@@ -79,8 +80,12 @@ def main():
         # 复制图片
         shutil.copy2(src, dst_img)
 
-        # 读取尺寸
-        img = cv2.imread(str(src))
+        # 读取尺寸 (兼容中文路径: np.fromfile + cv2.imdecode)
+        data = np.fromfile(str(src), dtype=np.uint8)
+        img = cv2.imdecode(data, cv2.IMREAD_COLOR)
+        if img is None:
+            print(f"  [WARN] 无法读取: {fname}, 跳过")
+            continue
         h, w = img.shape[:2]
 
         # 推理

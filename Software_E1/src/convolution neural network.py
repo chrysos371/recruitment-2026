@@ -83,10 +83,11 @@ def evaluate(test):
         print('Acc:%.2f'%(correct/total))
 if __name__ == '__main__':
     train, test = data_processing()
-    device = torch.device("cuda" )
-    model = Net().to(device)  # 模型移到GPU
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    print(f"[DEVICE] {device}")
+    model = Net().to(device)  # 模型移到GPU/CPU
     train_model(model, train, device)  # 传递device参数
-    model = Net()
+    evaluate(test)
     """
     # 1. 核心检查：CUDA是否可用
     cuda_available = torch.cuda.is_available()

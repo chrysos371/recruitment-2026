@@ -11,19 +11,20 @@ Software_C1 — 实时摄像头人脸模糊
 """
 
 import cv2
+import sys
 
 CASCADE_PATH = cv2.data.haarcascades + "haarcascade_frontalface_default.xml"
 face_cascade = cv2.CascadeClassifier(CASCADE_PATH)
 
 if face_cascade.empty():
     print(f"[ERROR] 无法加载 Haar Cascade: {CASCADE_PATH}")
-    exit(1)
+    sys.exit(1)
 
 # 摄像头
 cap = cv2.VideoCapture(0)
 if not cap.isOpened():
     print("[ERROR] 无法打开摄像头")
-    exit(1)
+    sys.exit(1)
 
 blur_strength = 25  # 初始模糊强度 (奇数)
 show_bbox = True

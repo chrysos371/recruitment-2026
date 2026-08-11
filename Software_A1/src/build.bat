@@ -1,4 +1,5 @@
 @echo off
+chcp 65001 >nul
 REM ============================================================
 REM  Software_A1/A2 — VS 2022 MSVC 一键编译脚本
 REM  河海大学智泽实验室 2026 招新考核
@@ -40,14 +41,16 @@ if %ERRORLEVEL% NEQ 0 (
 
 echo.
 echo Compiling Shape (A2)...
-cd ..\..\Software_A2\src
+pushd ..\..\Software_A2\src
 cl /EHsc /std:c++20 /utf-8 /nologo /Fe:shape_demo.exe shape.cpp main.cpp
 if %ERRORLEVEL% NEQ 0 (
     echo A2 compilation FAILED!
 ) else (
     echo A2 compilation SUCCESS! Run: shape_demo.exe
 )
+popd
 
 echo.
 echo Done.
 pause
+exit /b %ERRORLEVEL%

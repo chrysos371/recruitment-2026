@@ -37,8 +37,11 @@ def demo01():
 
     #用交叉验证网格搜索去优化随机森林的超参
     estimator = RandomForestClassifier()
-    param = {'n_estimators':[40,50,60,70],"max_depth":[2,4,6,8],'random_state':[7,8,9,10]}
+    param = {'n_estimators':[40,50,60,70],"max_depth":[2,4,6,8]}
     grid_search = GridSearchCV(estimator,param_grid=param,cv=2)
     grid_search.fit(x_train,y_train)
     accuracy = grid_search.score(x_test,y_test)
     print(grid_search.best_params_)
+
+if __name__ == '__main__':
+    demo01()

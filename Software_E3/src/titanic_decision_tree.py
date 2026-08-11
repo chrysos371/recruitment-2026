@@ -23,8 +23,10 @@ def decision_tree():
     taitan.head()
     taitan.info()
     #提取特征和标签
-    x = taitan[['Pclass','Age','Sex']]
+    x = taitan[['Pclass','Age','Sex']].copy()
     y = taitan['Survived']
+    #处理缺失值: 用均值填充 Age 的 NaN
+    x['Age'].fillna(x['Age'].mean(), inplace=True)
     #对类别型数据进行one_hot编码
     print('x -->1\n', x)
     x.info()
@@ -85,4 +87,5 @@ def regressiontree():
     plt.legend()
     plt.show()
 if __name__ == '__main__':
+    decision_tree()
     regressiontree()

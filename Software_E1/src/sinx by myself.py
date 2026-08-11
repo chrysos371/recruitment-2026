@@ -6,7 +6,6 @@
 import torch
 import torch.nn as nn
 import numpy as np
-from sympy import evaluate
 import matplotlib.pyplot as plt
 from torch.utils.data import TensorDataset, DataLoader
 from sklearn.model_selection import train_test_split
@@ -60,7 +59,7 @@ def train_model(train_dataset):
             loss.backward()
             optimizer.step()
             total_loss += loss.item()*x.size(0)
-        average_loss = total_loss / len(dataloader)
+        average_loss = total_loss / len(dataloader.dataset)
         print(f'epoch:{epoch},loss:{average_loss:.6f}')
     torch.save(model.state_dict(),'sinx.pth')
     return model

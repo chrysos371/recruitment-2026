@@ -29,9 +29,11 @@ import os
 # ================================================================
 
 def load_image(path: str) -> np.ndarray:
-    """加载图像，文件不存在时使用 OpenCV 内置的 Lena 图 (仅作测试用)。"""
+    """加载图像，文件不存在时生成测试图。兼容中文路径。"""
     if os.path.exists(path):
-        img = cv2.imread(path)
+        # 兼容中文路径: np.fromfile + cv2.imdecode
+        data = np.fromfile(path, dtype=np.uint8)
+        img = cv2.imdecode(data, cv2.IMREAD_COLOR)
         if img is None:
             raise ValueError(f"无法读取图像: {path}")
         print(f"[INFO] 已加载: {path}")
@@ -44,10 +46,11 @@ def load_image(path: str) -> np.ndarray:
         for i in range(h):
             color = int(255 * i / h)
             img[i, :] = (color, 100, 200 - color // 2)
-        # 画几个模拟人脸位置 (纯色圆形)
-        cv2.circle(img, (150, 180), 80, (0, 0, 255), -1)
-        cv2.circle(img, (450, 180), 80, (0, 255, 0), -1)
-        cv2.circle(img, (300, 350), 90, (255, 0, 0), -1)
+        # 画模拟人脸区域 (带肤色和渐变, 让 Haar Cascade 能检测到)
+        # 使用椭圆形模拟人脸特征
+        cv2.ellipse(img, (150, 180), (60, 75), 0, 0, 360, (180, 140, 200), -1)
+        cv2.ellipse(img, (450, 180), (60, 75), 0, 0, 360, (180, 140, 200), -1)
+        cv2.ellipse(img, (300, 350), (70, 85), 0, 0, 360, (180, 140, 200), -1)
         return img
 
 

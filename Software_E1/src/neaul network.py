@@ -1,6 +1,6 @@
 import torch
 import torch.nn as nn
-from torchsummary import summary
+# from torchsummary import summary  # 需要额外安装, 已注释
 from torch.utils.data import TensorDataset, DataLoader
 from sklearn.datasets import make_regression
 from sklearn.model_selection import train_test_split
@@ -63,12 +63,12 @@ def create_dataset():
     x,y = data.iloc[:,:-1],data.iloc[:,-1]
     #数据类型转换
     x = x.astype(np.float32)
-    y = y.astype(np.int32)
-    #划分数据集
-    x_train,x_test,y_train,y_test = train_test_split(x,y,test_size=0.8,random_state=42)
-    #将数据集转化为pytorch张量的形式
-    train_dataset = TensorDataset(torch.from_numpy(x_train),torch.from_numpy(y_train))
-    test_dataset = TensorDataset(torch.from_numpy(x_test),torch.from_numpy(y_test))
+    y = y.astype(np.int64)  # CrossEntropyLoss 要求 int64(Long)
+    #划分数据集 (test_size=0.2 表示 80% 训练, 20% 测试)
+    x_train,x_test,y_train,y_test = train_test_split(x,y,test_size=0.2,random_state=42)
+    #将数据集转化为pytorch张量的形式 (DataFrame/Series 需先转 numpy)
+    train_dataset = TensorDataset(torch.from_numpy(x_train.values),torch.from_numpy(y_train.values))
+    test_dataset = TensorDataset(torch.from_numpy(x_test.values),torch.from_numpy(y_test.values))
     return train_dataset,test_dataset,x_train.shape[1],len(np.unique(y))
 class NeuralNetwork(nn.Module):
     def __init__(self,input_dim,output_dim):
@@ -77,8 +77,8 @@ class NeuralNetwork(nn.Module):
         self.linear1 = nn.Linear(input_dim,128)
         #第二层输入维度为128，输出维度为256
         self.linear2 = nn.Linear(128,256)
-        #第三层输入维度为256，输出维度为4
-        self.linear3 = nn.Linear(256,4)
+        #第三层输入维度为256，输出维度为类别数
+        self.linear3 = nn.Linear(256, output_dim)
     def forward(self,x):
         #前向传播过程
         x = torch.relu(self.linear1(x))
@@ -148,6 +148,7 @@ def test(test_dataset,input_dim,class_num):
 if __name__ == '__main__':
     train_dataset,test_dataset,input_dim,class_num = create_dataset()
     train_model(train_dataset,input_dim,class_num)
+    test(test_dataset,input_dim,class_num)
 
 
 
