@@ -63,6 +63,7 @@ Makefile
 # Generated artifacts
 Software_C1/output/
 Software_C2/output/
+Software_C2/contact_sheet/
 Software_C3/output/
 Software_C3/disturbed/
 Software_E3/test.csv
