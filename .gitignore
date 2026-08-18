@@ -66,5 +66,6 @@ Software_C2/output/
 Software_C3/output/
 Software_E3/test.csv
 Software_E3/submission.csv
+Software_E4/data/
 *.obj
 *.cache
