@@ -9,6 +9,7 @@ Software_C2 — 本地标注修正工具 (无需 makesense.ai)
 
 操作:
   鼠标左键点击某个框  →  在 社区人员(0) 与 非社区人员(1) 之间切换
+  鼠标右键点击某个框  →  删除该框 (误检/框到无关东西)
   n / →               →  保存并跳到下一张
   p / ←               →  保存并回到上一张
   s                   →  保存当前标注
@@ -108,14 +109,19 @@ def redraw():
 
 def on_mouse(event, x, y, flags, param):
     global boxes
-    if event != cv2.EVENT_LBUTTONDOWN or img is None:
+    if img is None:
+        return
+    if event not in (cv2.EVENT_LBUTTONDOWN, cv2.EVENT_RBUTTONDOWN):
         return
     h, w = img.shape[:2]
     nx, ny = x / (w * scale), y / (h * scale)
     for i in range(len(boxes) - 1, -1, -1):
         cls, cx, cy, bw, bh = boxes[i]
         if abs(nx - cx) <= bw / 2 and abs(ny - cy) <= bh / 2:
-            if cls in (0, 1):
+            if event == cv2.EVENT_RBUTTONDOWN:
+                del boxes[i]
+                print(f"  删除框 {i} ({CLASS_NAMES.get(cls, cls)})")
+            elif cls in (0, 1):
                 boxes[i][0] = 1 - cls
                 print(f"  框 {i}: {CLASS_NAMES[cls]} -> {CLASS_NAMES[1-cls]}")
             else:
