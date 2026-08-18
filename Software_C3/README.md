@@ -77,8 +77,12 @@ Software_C3/
 ├── RGBlight*.jpg                  # 原始图片 (40张)
 ├── traffic_light_detector.py      # 红绿灯检测主程序
 ├── augment_and_test.py            # 干扰数据集构建 + 鲁棒性验证
-├── output/                        # 无干扰检测结果
-├── disturbed/                     # 干扰增强图 + 干扰检测结果
+├── make_showcase.py               # 生成精简展示集
+├── 展示/
+│   ├── 无干扰/                    # 无干扰环境 4 状态展示
+│   └── 干扰/                      # 干扰环境 4 状态展示
+├── output/                        # 无干扰检测结果 (全部 40 张)
+├── disturbed/                     # 干扰增强图 + 结果 (240 张, 可重新生成)
 ├── README.md
 └── notes.md
 ```
