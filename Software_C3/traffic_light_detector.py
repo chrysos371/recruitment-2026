@@ -31,11 +31,12 @@ from pathlib import Path
 # ================================================================
 
 # ---- HSV 颜色范围 (H:0-180, S:0-255, V:0-255) ----
-# 提高 S 下限滤除白色/灰色噪点
+# 绿色范围收紧: 交通绿灯是较纯的正绿 (H≈60-85), 不是黄绿/青绿 (H<60),
+# 后者常见于树叶/草地/反光, 是绿色过检的主要来源。S/V 下限也相应提高。
 RED_RANGE_1 = ((0, 150, 80), (10, 255, 255))
 RED_RANGE_2 = ((160, 150, 80), (180, 255, 255))
 YELLOW_RANGE = ((18, 120, 120), (33, 255, 255))
-GREEN_RANGE = ((45, 100, 80), (85, 255, 255))
+GREEN_RANGE = ((60, 120, 120), (85, 255, 255))
 
 # ---- 形态学参数 ----
 MORPH_KERNEL_SMALL = (3, 3)   # 小噪点
@@ -84,8 +85,25 @@ def circularity(contour) -> float:
     return 4.0 * np.pi * area / (perimeter * perimeter)
 
 
-def geometric_filter(contours, img_h, img_w) -> list:
-    """几何过滤: 面积、圆形度、长宽比、位置"""
+def contour_color_strength(hsv: np.ndarray, contour) -> float:
+    """轮廓区域内"点亮的强度": 平均 (饱和度×亮度) 归一化到 0-1。
+
+    真实的点亮的灯是 高饱和 + 高亮度 的; 反光/暗淡背景/绿色植被
+    要么低饱和(白色反光), 要么低亮度(阴影), 强度低。用这个权重能
+    显著区分"亮着的灯"和"被颜色掩码误抓的暗色/低饱和斑块"。
+    """
+    mask = np.zeros(hsv.shape[:2], dtype=np.uint8)
+    cv2.drawContours(mask, [contour], -1, 255, -1)
+    region = hsv[mask > 0]
+    if len(region) == 0:
+        return 0.0
+    s_mean = region[:, 1].astype(np.float64).mean()
+    v_mean = region[:, 2].astype(np.float64).mean()
+    return float(s_mean * v_mean / (255.0 * 255.0))
+
+
+def geometric_filter(contours, img_h, img_w, hsv) -> list:
+    """几何过滤: 面积、圆形度、长宽比、位置 + 颜色强度加权。"""
     valid = []
     for c in contours:
         area = cv2.contourArea(c)
@@ -93,7 +111,8 @@ def geometric_filter(contours, img_h, img_w) -> list:
             continue
 
         # 圆形度
-        if circularity(c) < MIN_CIRCULARITY:
+        circ = circularity(c)
+        if circ < MIN_CIRCULARITY:
             continue
 
         # 长宽比
@@ -102,27 +121,34 @@ def geometric_filter(contours, img_h, img_w) -> list:
         if aspect > MAX_ASPECT_RATIO:
             continue
 
-        # 位置: 底部区域降低置信度, 但不完全排除
+        # 位置: 底部区域降低置信度 (尾灯通常在画面底部, 交通灯在上部)
         center_y = y + h // 2
         bottom_penalty = 1.0
         if center_y > img_h * (1 - IMAGE_BOTTOM_RATIO):
-            bottom_penalty = 0.5  # 底部可能是尾灯, 降权
+            bottom_penalty = 0.3  # 底部可能是尾灯, 强降权
 
-        valid.append((c, area * circularity(c) * bottom_penalty))
+        # 颜色强度 (亮点 vs 暗淡/低饱和误抓)
+        strength = contour_color_strength(hsv, c)
+
+        conf = area * circ * bottom_penalty * strength
+        valid.append((c, conf))
 
     return valid
 
 
 def detect_lights(img_path: str) -> dict:
-    """
-    检测图像中的红绿灯。
-    返回: {"state": "red"/"yellow"/"green"/"off"/"unknown", "counts": {...}, "boxes": [...]}
-    """
-    # 兼容中文路径: np.fromfile + cv2.imdecode
+    """从路径读取图像并检测 (兼容中文路径)。"""
     img = cv2.imdecode(np.fromfile(str(img_path), dtype=np.uint8), cv2.IMREAD_COLOR)
     if img is None:
         return {"state": "unknown", "counts": {}, "boxes": []}
+    return detect_lights_array(img)
 
+
+def detect_lights_array(img: np.ndarray) -> dict:
+    """
+    检测 BGR 图像数组中的红绿灯。
+    返回: {"state": "red"/"yellow"/"green"/"off"/"unknown", "counts": {...}, "boxes": [...]}
+    """
     h, w = img.shape[:2]
     hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 
@@ -152,15 +178,17 @@ def detect_lights(img_path: str) -> dict:
         contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
         # 几何过滤
-        valid = geometric_filter(contours, h, w)
+        valid = geometric_filter(contours, h, w, hsv)
         results[name] = valid
 
     # 统计每种颜色的候选数
     counts = {name: len(items) for name, items in results.items()}
 
-    # 判断状态: 取置信度最高的颜色
+    # 判断状态: 取"最强单灯候选"的颜色, 而不是平均置信度。
+    # 一盏亮着的灯对应一个高置信度轮廓; 平均会混入噪声斑块,
+    # 且多个暗色误检的平均可能压过单个真实亮灯。
     best_color = "off"
-    best_conf = 0
+    best_conf = 0.0
     boxes = []
 
     for name, items in results.items():
@@ -168,13 +196,13 @@ def detect_lights(img_path: str) -> dict:
             x, y, cw, ch = cv2.boundingRect(c)
             boxes.append((name, x, y, cw, ch, conf))
         if items:
-            avg_conf = sum(it[1] for it in items) / len(items)
-            if avg_conf > best_conf:
-                best_conf = avg_conf
+            max_conf = max(it[1] for it in items)
+            if max_conf > best_conf:
+                best_conf = max_conf
                 best_color = name
 
     return {
-        "state": best_color if counts.get(best_color, 0) > 0 else "off",
+        "state": best_color if best_conf > 0 else "off",
         "counts": {k: len(v) for k, v in results.items()},
         "boxes": boxes,
     }
