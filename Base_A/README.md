@@ -26,12 +26,12 @@
 
 ### 2. 文本样式
 
-| 效果 | 语法 | 使用场景 |
-|------|------|----------|
-| **粗体** | `**粗体**` | 强调关键结论 |
-| *斜体* | `*斜体*` | 术语、文件名 |
-| ~~删除线~~ | `~~删除线~~` | 废弃方案 |
-| `行内代码` | `` `行内代码` `` | 变量名、命令 |
+| 效果      | 语法           | 使用场景   |
+| ------- | ------------ | ------ |
+| **粗体**  | `**粗体**`     | 强调关键结论 |
+| *斜体*    | `*斜体*`       | 术语、文件名 |
+| ~~删除线~~ | `~~删除线~~`    | 废弃方案   |
+| `行内代码`  | `` `行内代码` `` | 变量名、命令 |
 
 ### 3. 列表
 
@@ -52,7 +52,7 @@
 
 始终注明语言，确保 PyCharm 和 GitHub 都能正确高亮：
 
-````markdown
+```markdown
 ```python
 import torch
 import numpy as np
@@ -63,7 +63,7 @@ import numpy as np
 ```bash
 cd project && python train.py
 ```
-````
+```
 
 ### 5. 表格
 
@@ -128,13 +128,13 @@ Markdown 原生支持内嵌 HTML 标签，以下是考核中会用到的几种�
 ```markdown
 <details>
 <summary>点击展开：完整训练日志 (120 行)</summary>
-
 ```
+
 Epoch 1/50: loss=0.4523, acc=0.8234
 Epoch 2/50: loss=0.3214, acc=0.8712
 ...
-```
 
+```
 </details>
 ```
 
@@ -169,6 +169,7 @@ Epoch 2/50: loss=0.3214, acc=0.8712
 ```
 
 **补充说明:**
+
 - GitHub 对 HTML 标签有安全白名单，`<script>` 和 `<iframe>` 会被过滤
 - `<details>` 是 GitHub Flavored Markdown 最常用的 HTML 特性，适合隐藏大段日志
 - PyCharm 预览窗也支持大部分 HTML 嵌入
@@ -177,13 +178,13 @@ Epoch 2/50: loss=0.3214, acc=0.8712
 
 ## 我的编辑环境
 
-| 工具 | 版本/配置 | 用途 |
-|------|-----------|------|
-| **PyCharm** | 2025.3.3 | 主力 IDE，自带 Markdown 实时预览 + Python/C++ 支持 |
-| **Git Bash** | 2.53.0 | 版本控制 + 运行 shell 命令 |
-| **Python** | 3.14.0 (D:\python\) | 所有 Python 题目的运行时 |
-| **Conda** | 25.11.1 | 虚拟环境隔离 |
-| **GitHub** | [chrysos371/recruitment-2026](https://github.com/chrysos371/recruitment-2026) | 代码托管 |
+| 工具           | 版本/配置                                                                         | 用途                                      |
+| ------------ | ----------------------------------------------------------------------------- | --------------------------------------- |
+| **PyCharm**  | 2025.3.3                                                                      | 主力 IDE，自带 Markdown 实时预览 + Python/C++ 支持 |
+| **Git Bash** | 2.53.0                                                                        | 版本控制 + 运行 shell 命令                      |
+| **Python**   | 3.14.0 (D:\python\)                                                           | 所有 Python 题目的运行时                        |
+| **Conda**    | 25.11.1                                                                       | 虚拟环境隔离                                  |
+| **GitHub**   | [chrysos371/recruitment-2026](https://github.com/chrysos371/recruitment-2026) | 代码托管                                    |
 
 ---
 
